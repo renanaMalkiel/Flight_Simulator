@@ -10,7 +10,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         
-        <Controls:FlightBoard></Controls:FlightBoard>
+        <Controls:MyFlightBoard></Controls:MyFlightBoard>
         
     </Grid>
 </Window>

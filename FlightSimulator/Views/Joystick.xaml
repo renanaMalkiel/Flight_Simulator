@@ -133,13 +133,6 @@
                     </Storyboard>
                 </Canvas.Resources>
             </Canvas>
-
-            <Slider x:Name="rudderSlider" TickPlacement="BottomRight" Minimum="-1" Maximum="1" 
-         TickFrequency="0.1" Canvas.Top="345" Canvas.Left="15"  Width="300" VerticalAlignment="Bottom"  Height="45"/>
-
-            <Slider x:Name="throttleSlider" TickPlacement="BottomRight" Minimum="-1" Maximum="1" 
-        TickFrequency="0.1" Orientation="Vertical" Height="300"  Canvas.Left="-50"/>
-
         </Canvas>
     </Grid>
 </UserControl>
