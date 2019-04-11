@@ -14,7 +14,7 @@ namespace FlightSimulator.ViewModels
   
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (!string.IsNullOrEmpty(value.ToString()))? Brushes.LightCoral : Brushes.White;
+            return (!string.IsNullOrEmpty(value.ToString()))? Brushes.Pink : Brushes.White;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
