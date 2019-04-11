@@ -7,10 +7,22 @@
         xmlns:Controls="clr-namespace:FlightSimulator.Views"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="1000">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Viewbox Grid.Column="1" Grid.RowSpan="2">
+            <TabControl Height="550">
+                <TabItem Header="Menual">
+                    <Controls:MyJoystick></Controls:MyJoystick>
+                </TabItem>
+                <TabItem Header="Auto Pilot">
+                    <Controls:AutoPilot></Controls:AutoPilot>
+                </TabItem>
+            </TabControl>
+        </Viewbox>
         <Controls:MyFlightBoard></Controls:MyFlightBoard>
-        
     </Grid>
 </Window>

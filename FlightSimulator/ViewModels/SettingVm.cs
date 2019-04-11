@@ -11,16 +11,18 @@ namespace FlightSimulator.ViewModels
 {
     class SettingVM
     {
-        private ICommand _settingComand;
-        public ICommand SettingCommand
+        private ICommand _settingsComand;
+
+        public ICommand SettingsCommand
         {
             get
             {
-                return _settingComand ?? (_settingComand =
+                return _settingsComand ?? (_settingsComand =
                 new CommandHandler(() => OnClick()));
             }
             set
             {
+
             }
         }
         private void OnClick()

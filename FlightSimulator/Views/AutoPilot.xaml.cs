@@ -17,13 +17,14 @@ using FlightSimulator.ViewModels;
 namespace FlightSimulator.Views
 {
     /// <summary>
-    /// Interaction logic for SettingPopup.xaml
+    /// Interaction logic for AutoPilot.xaml
     /// </summary>
-    public partial class SettingPopup : Window
+    public partial class AutoPilot : UserControl
     {
-        public SettingPopup()
+        public AutoPilot()
         {
             InitializeComponent();
+            this.DataContext = new BackgroundConverter();
         }
     }
 }

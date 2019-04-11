@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FlightSimulator.ViewModels;
 
 namespace FlightSimulator.Views
 {
@@ -22,6 +23,7 @@ namespace FlightSimulator.Views
         public MyFlightBoard()
         {
             InitializeComponent();
+            this.DataContext = new SettingVM();
         }
     }
 }

@@ -5,14 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightSimulator.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="500" d:DesignWidth="500">
+
+    <Grid Height="500" Width="500">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <local:Joystick Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="0" Padding="70" ></local:Joystick>
+
+        <TextBlock Text="←throttle→" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Grid.RowSpan="2" >
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="270" />
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+
+        <TextBlock Text="←rudder→" FontSize="16"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="1" Margin="20" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+        <TextBlock Text="←elevator→" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Padding="50">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="270" />
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+
+        <TextBlock Text="←aileron→" FontSize="16"  HorizontalAlignment="Center" Grid.Column="1"  Margin="20" Grid.ColumnSpan="2"/>
 
         <Slider x:Name="rudderSlider" TickPlacement="BottomRight" Minimum="-1" Maximum="1" 
-         TickFrequency="0.1" Canvas.Top="345" Canvas.Left="15"  Width="300" VerticalAlignment="Bottom"  Height="45"/>
+         TickFrequency="0.1" Width="300" VerticalAlignment="Bottom"  Height="70" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3"/>
 
         <Slider x:Name="throttleSlider" TickPlacement="BottomRight" Minimum="-1" Maximum="1" 
-        TickFrequency="0.1" Orientation="Vertical" Height="300"  Canvas.Left="-50"/>
+        TickFrequency="0.1" Orientation="Vertical" Height="300" Grid.Column="0" Grid.RowSpan="4" Grid.Row="0" Margin="50"/>
+
+        <TextBlock Text="{Binding ElementName=throttleSlider,Path=Value}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="40" FontSize="12" FontWeight="DemiBold"/>
+
+        <TextBlock Text="{Binding ElementName=rudderSlider,Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Bottom"  FontSize="12" Grid.Row="4" Grid.Column="4" Margin="40" FontWeight="DemiBold"/>
+
+        <TextBlock Text="0.0" Grid.Column="4" VerticalAlignment="Top" Margin="30" FontWeight="DemiBold"/>
+
+        <TextBlock Text="0.0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50" FontWeight="DemiBold">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="270" />
+            </TextBlock.LayoutTransform>
+        </TextBlock>
 
     </Grid>
 </UserControl>
