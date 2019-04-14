@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightSimulator.Model
+namespace FlightSimulator.ViewModels
 {
-    class tets
+    class ConnectVM
     {
-        
-        
     }
 }
