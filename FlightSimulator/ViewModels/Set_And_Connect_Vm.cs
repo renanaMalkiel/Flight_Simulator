@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using FlightSimulator.Model;
 using FlightSimulator.Views;
+using FlightSimulator.Model.Interface;
 
 namespace FlightSimulator.ViewModels
 {
@@ -48,10 +49,8 @@ namespace FlightSimulator.ViewModels
         }
         private void OnClickConnect()
         {
-            //CommandsChannel commandsChannel = new CommandsChannel();
             InfoChannel InfoChannel = new InfoChannel();
-            CommandsChannel commandsChannel = new CommandsChannel();
-
+            IClientModel commandsChannel = CommandsChannel.Instance;
 
         }
     }

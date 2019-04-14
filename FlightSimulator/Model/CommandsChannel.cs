@@ -8,18 +8,37 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.IO;
+using System.Threading;
+using FlightSimulator.Model.Interface;
 
 namespace FlightSimulator.Model
 {
-    class CommandsChannel
+    class CommandsChannel : IClientModel
     {
+        private static IClientModel m_Instance = null;
         private TcpClient _client;
 
-        public CommandsChannel()
+      
+        #region Singleton
+        
+        public static IClientModel Instance
+        {
+            get
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = new CommandsChannel();
+                }
+                return m_Instance;
+            }
+        }
+        #endregion
+
+        private CommandsChannel()
         {
             ConnectClient();
         }
-        //private ApplicationSettingsModel settingsModel;
+
         public void ConnectClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
@@ -29,7 +48,13 @@ namespace FlightSimulator.Model
             Console.WriteLine("Command channel :You are connected");
         }
 
-        static void send(TcpClient _client)
+        public void send(string text)
+        {
+            Thread thread = new Thread(() => sendThroughSocket(_client));
+            thread.Start();
+        }
+
+        static void sendThroughSocket(TcpClient _client)
         {
             NetworkStream ns = _client.GetStream();
             using (NetworkStream stream = _client.GetStream())
@@ -37,8 +62,7 @@ namespace FlightSimulator.Model
             using (StreamWriter writer = new StreamWriter(stream))
             {
 
-                while (true)
-                {
+                
                     // Send data to server
                     Console.Write("Please enter a number: ");
                     string num = Console.ReadLine();
@@ -48,10 +72,17 @@ namespace FlightSimulator.Model
                     // Get result from server
                     string result = reader.ReadLine();
                     Console.WriteLine("Result = {0}", result);
-                }
+                
 
             }
-            _client.Close();
+           // _client.Close();
+        }
+
+        public List<string> parseText(string txt)
+        {
+            return new List<string>();
         }
     }
+
+    
 }

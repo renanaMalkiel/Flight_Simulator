@@ -88,9 +88,10 @@
     <Compile Include="Model\CommandsChannel.cs" />
     <Compile Include="Model\EventArgs\VirtualJoystickEventArgs.cs" />
     <Compile Include="Model\InfoChannel.cs" />
+    <Compile Include="Model\Interface\IClientModel.cs" />
     <Compile Include="Model\Interface\ISettingsModel.cs" />
     <Compile Include="Model\tets.cs" />
-    <Compile Include="ViewModels\BackgroundConverter.cs" />
+    <Compile Include="ViewModels\AutoPilotVM.cs" />
     <Compile Include="ViewModels\BaseNotify.cs" />
     <Compile Include="ViewModels\ConnectVM.cs" />
     <Compile Include="ViewModels\FlightBoardViewModel.cs" />
