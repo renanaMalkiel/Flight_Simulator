@@ -9,9 +9,11 @@ using FlightSimulator.Views;
 
 namespace FlightSimulator.ViewModels
 {
-    class SettingVM
+    class Set_And_Connect_Vm
     {
         private ICommand _settingsComand;
+        private ICommand _connectComand;
+
 
         public ICommand SettingsCommand
         {
@@ -30,5 +32,28 @@ namespace FlightSimulator.ViewModels
             SettingPopup setting = new SettingPopup();
             setting.ShowDialog();
         }
+
+
+        public ICommand ConnectCommand
+        {
+            get
+            {
+                return _connectComand ?? (_connectComand =
+                new CommandHandler(() => OnClickConnect()));
+            }
+            set
+            {
+
+            }
+        }
+        private void OnClickConnect()
+        {
+            //CommandsChannel commandsChannel = new CommandsChannel();
+            InfoChannel InfoChannel = new InfoChannel();
+            CommandsChannel commandsChannel = new CommandsChannel();
+
+
+        }
     }
+
 }

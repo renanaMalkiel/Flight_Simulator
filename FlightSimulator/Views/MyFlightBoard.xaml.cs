@@ -23,7 +23,7 @@ namespace FlightSimulator.Views
         public MyFlightBoard()
         {
             InitializeComponent();
-            this.DataContext = new SettingVM();
+            this.DataContext = new Set_And_Connect_Vm();
         }
     }
 }

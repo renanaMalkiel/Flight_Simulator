@@ -13,16 +13,26 @@ namespace FlightSimulator.Model
 {
     class CommandsChannel
     {
-        //private ApplicationSettingsModel settingsModel;
-        static void ExecuteClient()
+        private TcpClient _client;
+
+        public CommandsChannel()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
-                ApplicationSettingsModel.Instance.FlightCommandPort);
-            TcpClient client = new TcpClient();
-            client.Connect(ep);
-            Console.WriteLine("You are connected");
-            NetworkStream ns = client.GetStream();
-            using (NetworkStream stream = client.GetStream())
+            ConnectClient();
+        }
+        //private ApplicationSettingsModel settingsModel;
+        public void ConnectClient()
+        {
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
+            ApplicationSettingsModel.Instance.FlightCommandPort);
+            _client = new TcpClient();
+            _client.Connect(ep);
+            Console.WriteLine("Command channel :You are connected");
+        }
+
+        static void send(TcpClient _client)
+        {
+            NetworkStream ns = _client.GetStream();
+            using (NetworkStream stream = _client.GetStream())
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
             {
@@ -41,8 +51,7 @@ namespace FlightSimulator.Model
                 }
 
             }
-            client.Close();
-
+            _client.Close();
         }
     }
-} 
+}

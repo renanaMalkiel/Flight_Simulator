@@ -17,7 +17,8 @@
         </Grid.RowDefinitions>
         
         <Button  Name="ConnectButton" Content="Connect" Height="40" Width="120"  Margin="5" HorizontalAlignment="Right" 
-                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="0"/>
+                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="0"
+                 Command="{Binding ConnectCommand}"/>
 
         <Button  Name="SettingsButton" Content="Settings" Height="40" Width="120"  Margin="5" HorizontalAlignment="Left" 
                  FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="1"

@@ -94,7 +94,7 @@
     <Compile Include="ViewModels\BaseNotify.cs" />
     <Compile Include="ViewModels\ConnectVM.cs" />
     <Compile Include="ViewModels\FlightBoardViewModel.cs" />
-    <Compile Include="ViewModels\SettingVm.cs" />
+    <Compile Include="ViewModels\Set_And_Connect_Vm.cs" />
     <Compile Include="ViewModels\Windows\SettingsWindowViewModel.cs" />
     <Compile Include="Views\AutoPilot.xaml.cs">
       <DependentUpon>AutoPilot.xaml</DependentUpon>
