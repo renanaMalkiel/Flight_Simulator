@@ -16,7 +16,7 @@ namespace FlightSimulator.Model
     class CommandsChannel : IClientModel
     {
         private static IClientModel m_Instance = null;
-        private Mutex mutex;
+        private Mutex _mutex;
         TcpClient _client;
 
 
@@ -36,7 +36,7 @@ namespace FlightSimulator.Model
 
         private CommandsChannel()
         {
-           // Mutex m = new Mutex();
+           _mutex = new Mutex();
         }
 
         public void ConnectClient()
@@ -53,13 +53,16 @@ namespace FlightSimulator.Model
         public void send(string text)
         {
             string[] chunks = parseText(text);
+            _mutex.WaitOne();
             Thread thread = new Thread(() => sendThroughSocket(chunks,_client));
             thread.Start();
+            _mutex.ReleaseMutex();
         }
 
         static void sendThroughSocket(string[] chunks, TcpClient _client)
         {
             NetworkStream ns = _client.GetStream();
+   
             foreach (string chunk in chunks)
             { 
                 // Send data to server
@@ -67,6 +70,7 @@ namespace FlightSimulator.Model
                 command += "\r\n";
                 byte[] buffWriter = Encoding.ASCII.GetBytes(command);
                 ns.Write(buffWriter, 0, buffWriter.Length);
+                System.Threading.Thread.Sleep(2000);
 
                 // Get result from server
                 //string result = reader.ReadLine();
@@ -80,7 +84,7 @@ namespace FlightSimulator.Model
         public string[] parseText(string txt)
         {
             string[] chunks;
-            chunks = txt.Split(',');
+            chunks = txt.Split('\n');
             return chunks;
         }
     }

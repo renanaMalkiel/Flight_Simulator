@@ -53,13 +53,12 @@ namespace FlightSimulator.ViewModels
         private void ClearClick()
         {
             text = "";
-            NotifyPropertyChanged("text");
+            NotifyPropertyChanged("Text");
         }
 
         public string ChangeColor
         {
             get { return (text == "") ? "White" : "Pink"; }
-            set { }
         }
 
 
@@ -70,15 +69,13 @@ namespace FlightSimulator.ViewModels
                 return _OKCommand ?? (_OKCommand =
                 new CommandHandler(() => OKClick()));
             }
-            set
-            {
-
-            }
         }
 
         private void OKClick()
         {
             commandChannel.send(text);
+            text = "";
+            NotifyPropertyChanged("Text");
         }
     }
 

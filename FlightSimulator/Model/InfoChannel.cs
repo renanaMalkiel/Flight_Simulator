@@ -21,7 +21,6 @@ namespace FlightSimulator.Model
         }
         public void connect()
         {
-            
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
             ApplicationSettingsModel.Instance.FlightInfoPort);
             TcpListener listener = new TcpListener(ep);
@@ -30,7 +29,6 @@ namespace FlightSimulator.Model
             _client = listener.AcceptTcpClient();
             Console.WriteLine("Info channel: Client connected");
 
-           
         }
 
         public static void listen(TcpClient _client)
