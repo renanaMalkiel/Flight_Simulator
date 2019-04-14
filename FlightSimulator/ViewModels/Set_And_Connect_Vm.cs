@@ -49,7 +49,7 @@ namespace FlightSimulator.ViewModels
         }
         private void OnClickConnect()
         {
-            InfoChannel InfoChannel = new InfoChannel();
+            //InfoChannel InfoChannel = new InfoChannel();
             CommandsChannel.Instance.ConnectClient();
 
         }

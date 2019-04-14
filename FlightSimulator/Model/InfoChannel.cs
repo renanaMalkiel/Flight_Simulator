@@ -23,7 +23,7 @@ namespace FlightSimulator.Model
         {
             
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
-                ApplicationSettingsModel.Instance.FlightInfoPort);
+            ApplicationSettingsModel.Instance.FlightInfoPort);
             TcpListener listener = new TcpListener(ep);
             listener.Start();
             //Console.WriteLine("Waiting for client connections...");

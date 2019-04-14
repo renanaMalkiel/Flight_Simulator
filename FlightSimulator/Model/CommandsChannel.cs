@@ -53,11 +53,8 @@ namespace FlightSimulator.Model
         public void send(string text)
         {
             string[] chunks = parseText(text);
-         
             Thread thread = new Thread(() => sendThroughSocket(chunks,_client));
             thread.Start();
-            
-            
         }
 
         static void sendThroughSocket(string[] chunks, TcpClient _client)
