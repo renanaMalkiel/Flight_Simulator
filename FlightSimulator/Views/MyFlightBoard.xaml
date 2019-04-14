@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightSimulator.Views"
-        mc:Ignorable="d" Height="500" Width="500">
-  
+        mc:Ignorable="d">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,15 +15,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <Button  Name="ConnectButton" Content="Connect" Height="40" Width="120" Margin="6" HorizontalAlignment="Right" 
-                FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="0"
+        
+        <Button  Name="ConnectButton" Content="Connect" Height="40" Width="120"  Margin="5" HorizontalAlignment="Right" 
+                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="0"
                  Command="{Binding ConnectCommand}"/>
 
-        <Button  Name="SettingsButton" Content="Settings" Height="40" Width="120" Margin="6" HorizontalAlignment="Left" 
+        <Button  Name="SettingsButton" Content="Settings" Height="40" Width="120"  Margin="5" HorizontalAlignment="Left" 
                  FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="1"
                  Command="{Binding SettingsCommand}"/>
-
+        
         <local:FlightBoard Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1"></local:FlightBoard>
     </Grid>
 </UserControl>

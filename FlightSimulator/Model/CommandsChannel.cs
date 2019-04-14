@@ -8,50 +8,87 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.IO;
+using System.Threading;
+using FlightSimulator.Model.Interface;
 
 namespace FlightSimulator.Model
 {
-    class CommandsChannel
+    class CommandsChannel : IClientModel
     {
-        private TcpClient _client;
+        private static IClientModel m_Instance = null;
+        private Mutex mutex;
+        TcpClient _client;
 
-        public CommandsChannel()
+
+
+        public static IClientModel Instance
         {
-            ConnectClient();
+            get
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = new CommandsChannel();
+                }
+                return m_Instance;
+            }
         }
-        //private ApplicationSettingsModel settingsModel;
+        
+
+        private CommandsChannel()
+        {
+           // Mutex m = new Mutex();
+        }
+
         public void ConnectClient()
-        {        
+        {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
             ApplicationSettingsModel.Instance.FlightCommandPort);
             _client = new TcpClient();
             _client.Connect(ep);
-            Console.WriteLine("You are connected");
+            Console.WriteLine("Command channel :You are connected");
+         
+            
         }
 
-        static void send(TcpClient _client)
+        public void send(string text)
+        {
+            string[] chunks = parseText(text);
+         
+            Thread thread = new Thread(() => sendThroughSocket(chunks,_client));
+            thread.Start();
+            
+            
+        }
+
+        static void sendThroughSocket(string[] chunks, TcpClient _client)
         {
             NetworkStream ns = _client.GetStream();
-            using (NetworkStream stream = _client.GetStream())
-            using (StreamReader reader = new StreamReader(stream))
-            using (StreamWriter writer = new StreamWriter(stream))
-            {
-
-                while (true)
+            foreach (string chunk in chunks)
                 {
-                    // Send data to server
-                    Console.Write("Please enter a number: ");
-                    string num = Console.ReadLine();
-                    num += "\r\n";
-                    writer.Write(num);
-                    writer.Flush();
-                    // Get result from server
-                    string result = reader.ReadLine();
-                    Console.WriteLine("Result = {0}", result);
-                }
+               
+                // Send data to server
+                Console.Write("Please enter a number: ");
+                    string command = chunk;
+                    command += "\r\n";
+                    byte[] buffWriter = Encoding.ASCII.GetBytes(command);
+                    ns.Write(buffWriter, 0, buffWriter.Length);
 
-            }
-            _client.Close();
-        } 
+                    // Get result from server
+                    //string result = reader.ReadLine();
+                    //Console.WriteLine("Result = {0}", result);
+                }
+                
+            
+           // _client.Close();
+        }
+
+        public string[] parseText(string txt)
+        {
+            string[] chunks;
+            chunks = txt.Split(',');
+            return chunks;
+        }
     }
+
+    
 }
