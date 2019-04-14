@@ -9,17 +9,15 @@ using FlightSimulator.Views;
 
 namespace FlightSimulator.ViewModels
 {
-    class SettingVM
+    class ConnectVM
     {
-        private ICommand _settingsComand;
         private ICommand _connectComand;
 
-
-        public ICommand SettingsCommand
+        public ICommand ConnectCommand
         {
             get
             {
-                return _settingsComand ?? (_settingsComand =
+                return _connectComand ?? (_connectComand =
                 new CommandHandler(() => OnClick()));
             }
             set
@@ -29,31 +27,9 @@ namespace FlightSimulator.ViewModels
         }
         private void OnClick()
         {
-            SettingPopup setting = new SettingPopup();
-            setting.ShowDialog();
-        }
-
-
-        public ICommand ConnectCommand
-        {
-            get
-            {
-                return _connectComand ?? (_connectComand =
-                new CommandHandler(() => OnClickConnect()));
-            }
-            set
-            {
-
-            }
-        }
-        private void OnClickConnect()
-        {
             CommandsChannel commandsChannel = new CommandsChannel();
         }
     }
 
 }
-
-    
-   
 

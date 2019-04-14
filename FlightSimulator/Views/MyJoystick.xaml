@@ -23,9 +23,9 @@
 
         <local:Joystick Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="0" Padding="70" ></local:Joystick>
 
-        <TextBlock Text="←throttle→" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Grid.RowSpan="2" >
+        <TextBlock Text="←throttle→" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Grid.RowSpan="2" >
             <TextBlock.LayoutTransform>
-                <RotateTransform Angle="270" />
+                <RotateTransform Angle="90"/>
             </TextBlock.LayoutTransform>
         </TextBlock>
 
@@ -33,7 +33,7 @@
 
         <TextBlock Text="←elevator→" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Right" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Padding="50">
             <TextBlock.LayoutTransform>
-                <RotateTransform Angle="270" />
+                <RotateTransform Angle="90" />
             </TextBlock.LayoutTransform>
         </TextBlock>
 
@@ -45,9 +45,9 @@
         <Slider x:Name="throttleSlider" TickPlacement="BottomRight" Minimum="-1" Maximum="1" 
         TickFrequency="0.1" Orientation="Vertical" Height="300" Grid.Column="0" Grid.RowSpan="4" Grid.Row="0" Margin="50"/>
 
-        <TextBlock Text="{Binding ElementName=throttleSlider,Path=Value}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="40" FontSize="12" FontWeight="DemiBold"/>
+        <TextBlock Text="{Binding ElementName=throttleSlider,Path=Value}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40" FontSize="12" FontWeight="DemiBold"/>
 
-        <TextBlock Text="{Binding ElementName=rudderSlider,Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Bottom"  FontSize="12" Grid.Row="4" Grid.Column="4" Margin="40" FontWeight="DemiBold"/>
+        <TextBlock Text="{Binding ElementName=rudderSlider,Path=Value}" HorizontalAlignment="Left" VerticalAlignment="Bottom"  FontSize="12" Grid.Row="4" Grid.Column="4" Margin="40" FontWeight="DemiBold"/>
 
         <TextBlock Text="0.0" Grid.Column="4" VerticalAlignment="Top" Margin="30" FontWeight="DemiBold"/>
 

@@ -8,13 +8,15 @@
         
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="1000">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Viewbox Grid.Column="1">
-            <TabControl Height="550">
+    
+    <Viewbox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TabControl Height="550" Grid.Column="1">
                 <TabItem Header="Menual">
                     <Controls:MyJoystick></Controls:MyJoystick>
                 </TabItem>
@@ -22,7 +24,8 @@
                     <Controls:AutoPilot></Controls:AutoPilot>
                 </TabItem>
             </TabControl>
-        </Viewbox>
-        <Controls:MyFlightBoard></Controls:MyFlightBoard>
-    </Grid>
+
+            <Controls:MyFlightBoard></Controls:MyFlightBoard>
+        </Grid>
+    </Viewbox>
 </Window>
