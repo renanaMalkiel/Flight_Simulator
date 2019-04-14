@@ -61,19 +61,17 @@ namespace FlightSimulator.Model
         {
             NetworkStream ns = _client.GetStream();
             foreach (string chunk in chunks)
-                {
-               
+            { 
                 // Send data to server
-                Console.Write("Please enter a number: ");
-                    string command = chunk;
-                    command += "\r\n";
-                    byte[] buffWriter = Encoding.ASCII.GetBytes(command);
-                    ns.Write(buffWriter, 0, buffWriter.Length);
+                string command = chunk;
+                command += "\r\n";
+                byte[] buffWriter = Encoding.ASCII.GetBytes(command);
+                ns.Write(buffWriter, 0, buffWriter.Length);
 
-                    // Get result from server
-                    //string result = reader.ReadLine();
-                    //Console.WriteLine("Result = {0}", result);
-                }
+                // Get result from server
+                //string result = reader.ReadLine();
+                //Console.WriteLine("Result = {0}", result);
+            }
                 
             
            // _client.Close();

@@ -15,7 +15,6 @@ namespace FlightSimulator.ViewModels
         private ICommand _settingsComand;
         private ICommand _connectComand;
 
-
         public ICommand SettingsCommand
         {
             get
