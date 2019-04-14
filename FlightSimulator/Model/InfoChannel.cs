@@ -48,7 +48,7 @@ namespace FlightSimulator.Model
                     ns.Read(bytes, 0, _client.ReceiveBufferSize);
                     string msg = Encoding.ASCII.GetString(bytes); //the message incoming
                     splitMsg = msg.Split(',');
-                    lon = splitMsg[0];
+                    lon = splitMsg[0];//TODO
                     lat = splitMsg[1];
                     Console.WriteLine(msg);
 
