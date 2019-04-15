@@ -10,10 +10,13 @@ namespace FlightSimulator.ViewModels
 {
     class JoyStickVM
     {
+        
         private string rudderSet = "set controls/flight/rudder";
         private string throttleSet = "set controls/engines/current-engine/throttle";
+        private string AileronSet = "set controls/flight/aileron";
+        private string ElevatorSet = "set controls/flight/elevator";
 
-        public float Rudder
+        public double Rudder
         {
             set
             {
@@ -22,15 +25,34 @@ namespace FlightSimulator.ViewModels
             }
         }
 
-        public float Throttle
+        public double Throttle
         {
             set
             {
                 string msg = throttleSet + " " + value + " " + "\r\n";
+                //CommandsChannel.Instance.ConnectClient();
                 CommandsChannel.Instance.send(msg);
             }
         }
 
+        public double Elevator
+        {
+            set
+            {
+                string msg = ElevatorSet + " " + value + " " + "\r\n";
+                //CommandsChannel.Instance.ConnectClient();
+                CommandsChannel.Instance.send(msg);
+                Console.WriteLine("jkdhjkfhdsjkf");
+            }
+        }
 
+        public double Aileron
+        {
+            set
+            {
+                string msg = ElevatorSet + " " + value + " " + "\r\n";
+                CommandsChannel.Instance.send(msg);
+            }
+        }
     }
 }

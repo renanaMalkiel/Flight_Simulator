@@ -21,7 +21,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local:Joystick Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="0" Padding="70" ></local:Joystick>
+        <local:Joystick x:Name="Joystick" Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="0" Padding="70" 
+                        Aileron="{Binding Aileron, Mode=OneWayToSource}"
+                        Elevator="{Binding Elevator, Mode=OneWayToSource}"></local:Joystick>
 
         <TextBlock Text="←throttle→" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Grid.RowSpan="2" >
             <TextBlock.LayoutTransform>
@@ -51,9 +53,11 @@
 
         <TextBlock Text="{Binding ElementName=rudderSlider,Path=Value, StringFormat=0.00}" HorizontalAlignment="Center" VerticalAlignment="Bottom"  FontSize="12" Grid.Row="4" Grid.Column="4" Margin="40" FontWeight="DemiBold"/>
 
-        <TextBlock Text="0.0" Grid.Column="4" VerticalAlignment="Top" Margin="30" FontWeight="DemiBold"/>
+        <TextBlock x:Name="AileronText" Text="{Binding ElementName=Joystick, Path=Aileron, StringFormat=0.00}" 
+                   Grid.Column="4" VerticalAlignment="Top" Margin="30" FontWeight="DemiBold"/>
 
-        <TextBlock Text="0.0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50" FontWeight="DemiBold">
+        <TextBlock x:Name="ElevatorText" Text="{Binding ElementName=Joystick, Path=Elevator, StringFormat=0.00}" 
+                   Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50" FontWeight="DemiBold">
             <TextBlock.LayoutTransform>
                 <RotateTransform Angle="270" />
             </TextBlock.LayoutTransform>
