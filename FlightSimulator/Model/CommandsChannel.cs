@@ -20,7 +20,7 @@ namespace FlightSimulator.Model
         TcpClient _client;
         bool _isConnected;
 
-
+        
         public static CommandsChannel Instance
         {
             get
@@ -40,6 +40,7 @@ namespace FlightSimulator.Model
            _isConnected = false;
         }
 
+        //connecting to the flightgear as a client
         public void ConnectClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
@@ -51,6 +52,7 @@ namespace FlightSimulator.Model
             
         }
 
+        // gets all the info from the user and splits into commands and sends to flightgear
         public void send(string text)
         {
             string[] chunks = parseText(text);
@@ -60,11 +62,12 @@ namespace FlightSimulator.Model
             _mutex.ReleaseMutex();
         }
 
+        // sending the commands to the plane in a seprate thread
         public void sendThroughSocket(string[] chunks, TcpClient _client)
         {
             if (!_isConnected) return;
             NetworkStream ns = _client.GetStream();
-   
+            //sending command to plane every 2 secconds 
             foreach (string chunk in chunks)
             { 
                 // Send data to server
@@ -73,15 +76,11 @@ namespace FlightSimulator.Model
                 byte[] buffWriter = Encoding.ASCII.GetBytes(command);
                 ns.Write(buffWriter, 0, buffWriter.Length);
                 System.Threading.Thread.Sleep(2000);
-
-                // Get result from server
-                //string result = reader.ReadLine();
-                //Console.WriteLine("Result = {0}", result);
             }
                 
-           // _client.Close();
         }
 
+        // splitting the text to commands by \n
         public string[] parseText(string txt)
         {
             string[] chunks;

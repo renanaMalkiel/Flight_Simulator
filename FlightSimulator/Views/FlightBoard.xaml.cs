@@ -17,6 +17,7 @@ using FlightSimulator.Model;
 using FlightSimulator.ViewModels;
 using Microsoft.Research.DynamicDataDisplay;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
+using FlightSimulator.ViewModels;
 
 namespace FlightSimulator.Views
 {
@@ -25,15 +26,19 @@ namespace FlightSimulator.Views
     /// </summary>
     public partial class FlightBoard : UserControl
     {
+        //InfoChannel FlightBoardViewModel;
         ObservableDataSource<Point> planeLocations = null;
+        //FlightBoardViewModel vm;
         public FlightBoard()
         {
             InitializeComponent();
-            //this.DataContext = new FlightBoardViewModel();
+            FlightBoardViewModel.Instance.PropertyChanged += Vm_PropertyChanged;
+            Console.WriteLine("bloop\n");
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            
             planeLocations = new ObservableDataSource<Point>();
             // Set identity mapping of point in collection to point on plot
             planeLocations.SetXYMapping(p => p);
@@ -47,7 +52,8 @@ namespace FlightSimulator.Views
             if(e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
                 Console.WriteLine("hiiiiiii2");
-                Point p1 = new Point(0.5,0.5);            // Fill here!
+                Point p1 = new Point(FlightBoardViewModel.Instance.Lat, FlightBoardViewModel.Instance.Lon);  // Fill here!            
+
                 planeLocations.AppendAsync(Dispatcher, p1);
             }
         }

@@ -27,6 +27,8 @@ namespace FlightSimulator.ViewModels
 
             }
         }
+
+        // when clicks on settings the pop up will apear 
         private void OnClick()
         {
             SettingPopup setting = new SettingPopup();
@@ -46,8 +48,11 @@ namespace FlightSimulator.ViewModels
 
             }
         }
+
+        // when clicking connect, connect the info and command channel
         private void OnClickConnect()
         {
+            //todo disconnect and reconnect
             InfoChannel.Instance.connectServer();
             CommandsChannel.Instance.ConnectClient();
 

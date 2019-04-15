@@ -44,12 +44,14 @@ namespace FlightSimulator.ViewModels
             }
         }
 
+        // when clicking on clear, will clear the text box and notify
         private void ClearClick()
         {
             text = "";
             NotifyPropertyChanged("Text");
         }
 
+        // if the text is full will be pink
         public string ChangeColor
         {
             get { return (text == "") ? "White" : "Pink"; }
@@ -65,6 +67,7 @@ namespace FlightSimulator.ViewModels
             }
         }
 
+        // when clicking ok send commands to the plane and clear the textbox
         private void OKClick()
         {
             CommandsChannel.Instance.send(text);

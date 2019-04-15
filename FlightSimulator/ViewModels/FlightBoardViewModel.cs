@@ -4,36 +4,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FlightSimulator.Model;
 using FlightSimulator.Views;
 
 namespace FlightSimulator.ViewModels
 {
     public class FlightBoardViewModel : BaseNotify
     {
-        //private FlightBoard view;
-        public FlightBoardViewModel()
+        private double lon, lat;
+
+        private static FlightBoardViewModel m_Instance = null;
+
+        public static FlightBoardViewModel Instance
         {
-            //view = new FlightBoard();
-            //PropertyChanged += view.Vm_PropertyChanged;
+            get
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = new FlightBoardViewModel();
+                }
+                return m_Instance;
+            }
         }
+        //private FlightBoard view;
+        private FlightBoardViewModel() {}
 
         public double Lon
         {
-            get { return InfoChannel.Instance.Lon; }
+            get { return lon; }
             set
             {
-                InfoChannel.Instance.Lon = value;
+                lon = value;
+                Console.WriteLine("lon: {0}", value);
                 NotifyPropertyChanged("Lon");
             }
         }
 
         public double Lat
         {
-            get { return InfoChannel.Instance.Lat; }
+            get { return lat; }
             set
             {
-                InfoChannel.Instance.Lon = value;
+                lat = value;
+                Console.WriteLine("lat: {0}", value);
                 NotifyPropertyChanged("Lat");
             }
         }
