@@ -15,12 +15,10 @@ namespace FlightSimulator.ViewModels
         private string text;
         private ICommand _clearCommand;
         private ICommand _OKCommand;
-        private IClientModel commandChannel;
-
+      
         public AutoPilotVM()
         {
             text = "";
-            commandChannel = CommandsChannel.Instance;
         }
 
         public string Text
@@ -43,10 +41,6 @@ namespace FlightSimulator.ViewModels
             {
                 return _clearCommand ?? (_clearCommand =
                 new CommandHandler(() => ClearClick()));
-            }
-            set
-            {
-
             }
         }
 
@@ -73,7 +67,7 @@ namespace FlightSimulator.ViewModels
 
         private void OKClick()
         {
-            commandChannel.send(text);
+            CommandsChannel.Instance.send(text);
             text = "";
             NotifyPropertyChanged("Text");
         }

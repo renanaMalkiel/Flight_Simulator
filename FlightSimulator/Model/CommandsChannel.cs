@@ -13,15 +13,14 @@ using FlightSimulator.Model.Interface;
 
 namespace FlightSimulator.Model
 {
-    class CommandsChannel : IClientModel
+    class CommandsChannel
     {
-        private static IClientModel m_Instance = null;
+        private static CommandsChannel m_Instance = null;
         private Mutex _mutex;
         TcpClient _client;
 
 
-
-        public static IClientModel Instance
+        public static CommandsChannel Instance
         {
             get
             {
@@ -46,7 +45,6 @@ namespace FlightSimulator.Model
             _client = new TcpClient();
             _client.Connect(ep);
             Console.WriteLine("Command channel :You are connected");
-         
             
         }
 
@@ -77,7 +75,6 @@ namespace FlightSimulator.Model
                 //Console.WriteLine("Result = {0}", result);
             }
                 
-            
            // _client.Close();
         }
 

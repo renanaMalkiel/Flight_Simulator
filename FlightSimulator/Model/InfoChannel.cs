@@ -10,32 +10,42 @@ namespace FlightSimulator.Model
 {
     class InfoChannel
     {
+        private static InfoChannel m_Instance = null;
         TcpClient _client;
+        float lon, lat;
 
-        public InfoChannel()
+        public static InfoChannel Instance
         {
-            connect();
-            Thread thread = new Thread(() => listen(_client));
-            thread.Start();
-            
+            get
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = new InfoChannel();
+                }
+                return m_Instance;
+            }
         }
-        public void connect()
+
+        private InfoChannel() { }
+       
+        public void connectServer()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
             ApplicationSettingsModel.Instance.FlightInfoPort);
             TcpListener listener = new TcpListener(ep);
             listener.Start();
-            //Console.WriteLine("Waiting for client connections...");
+            Console.WriteLine("Waiting for client connections...");
             _client = listener.AcceptTcpClient();
             Console.WriteLine("Info channel: Client connected");
 
+            Thread thread = new Thread(() => listen(_client));
+            thread.Start();
         }
 
-        public static void listen(TcpClient _client)
+        public void listen(TcpClient _client)
         {
             Byte[] bytes;
-            string[] splitMsg = new string[23];
-            string lon, lat;
+            //string[] splitMsg = new string[23];
             NetworkStream ns = _client.GetStream();
 
             while (true)
@@ -45,13 +55,19 @@ namespace FlightSimulator.Model
                     bytes = new byte[_client.ReceiveBufferSize];
                     ns.Read(bytes, 0, _client.ReceiveBufferSize);
                     string msg = Encoding.ASCII.GetString(bytes); //the message incoming
-                    splitMsg = msg.Split(',');
-                    lon = splitMsg[0];//TODO
-                    lat = splitMsg[1];
+                    splitMsg(msg);
                     Console.WriteLine(msg);
 
                 }
             }
+        }
+
+        // solit the info to lon and lat
+        public void splitMsg(string msg)
+        {
+            string[] splitMs = msg.Split(',');
+            lon = float.Parse(splitMs[0]);//TODO
+            lat = float.Parse(splitMs[1]);
         }
     }
 }

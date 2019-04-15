@@ -12,14 +12,13 @@ namespace FlightSimulator.ViewModels
     {
         private string rudderSet = "set controls/flight/rudder";
         private string throttleSet = "set controls/engines/current-engine/throttle";
-        IClientModel commandChannel = CommandsChannel.Instance;
 
         public float Rudder
         {
             set
             {
                 string msg = rudderSet + " " + value + " " + "\r\n";
-                commandChannel.send(msg);
+                CommandsChannel.Instance.send(msg);
             }
         }
 
@@ -28,14 +27,9 @@ namespace FlightSimulator.ViewModels
             set
             {
                 string msg = throttleSet + " " + value + " " + "\r\n";
-                commandChannel.send(msg);
+                CommandsChannel.Instance.send(msg);
             }
         }
-
-
-
-
-
 
 
     }

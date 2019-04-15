@@ -48,7 +48,7 @@ namespace FlightSimulator.ViewModels
         }
         private void OnClickConnect()
         {
-            //InfoChannel InfoChannel = new InfoChannel();
+            InfoChannel.Instance.connectServer();
             CommandsChannel.Instance.ConnectClient();
 
         }
