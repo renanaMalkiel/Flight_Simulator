@@ -20,7 +20,7 @@ using Microsoft.Research.DynamicDataDisplay.DataSources;
 
 namespace FlightSimulator.Views
 {
-   
+
 
     /// <summary>
     /// Interaction logic for MazeBoard.xaml
@@ -36,7 +36,7 @@ namespace FlightSimulator.Views
             //this.DataContext = new FlightBoardViewModel();
             flightBoardViewModel = new FlightBoardViewModel();
             flightBoardViewModel.PropertyChanged += Vm_PropertyChanged;
-           
+
 
 
         }
@@ -52,11 +52,11 @@ namespace FlightSimulator.Views
 
         private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            
-            if(e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
+
+            if (e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
                 Console.WriteLine("hiiiiiii2");
-                Point p1 = new Point(flightBoardViewModel.Lat , flightBoardViewModel.Lon);
+                Point p1 = new Point(flightBoardViewModel.Lat, flightBoardViewModel.Lon);
                 // Fill here!
                 //Console.WriteLine("Lat: {0}, Lon: {1}", flightBoardViewModel.Lat, flightBoardViewModel.Lon);
                 planeLocations.AppendAsync(Dispatcher, p1);

@@ -13,8 +13,9 @@ namespace FlightSimulator.Model
     {
         private static InfoChannel m_Instance = null;
         TcpClient _client;
+        TcpListener _listener;
         double lon, lat;
-        
+
 
         public bool shouldStop
         {
@@ -23,8 +24,10 @@ namespace FlightSimulator.Model
         }
 
 
-        public double Lon {
-            set {
+        public double Lon
+        {
+            set
+            {
                 lon = value;
                 NotifyPropertyChanged("Lon");
 
@@ -34,7 +37,8 @@ namespace FlightSimulator.Model
 
         public double Lat
         {
-            set {
+            set
+            {
                 lat = value;
                 NotifyPropertyChanged("Lat");
             }
@@ -57,25 +61,25 @@ namespace FlightSimulator.Model
         {
 
             shouldStop = false;
-         }
-       
+        }
+
         public void connectServer()
         {
-            
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
-            ApplicationSettingsModel.Instance.FlightInfoPort);
-            TcpListener listener = new TcpListener(ep);
-            listener.Start();
-            Console.WriteLine("Waiting for client connections...");
-            _client = listener.AcceptTcpClient();
-            Console.WriteLine("Info channel: Client connected");
-        
 
-        Thread thread = new Thread(() => listen(_client));
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
+        ApplicationSettingsModel.Instance.FlightInfoPort);
+            _listener = new TcpListener(ep);
+            _listener.Start();
+            Console.WriteLine("Waiting for client connections...");
+            _client = _listener.AcceptTcpClient();
+            Console.WriteLine("Info channel: Client connected");
+
+
+            Thread thread = new Thread(() => listen(_client, _listener));
             thread.Start();
         }
 
-        public void listen(TcpClient _client)
+        public void listen(TcpClient _client, TcpListener _listener)
         {
             Byte[] bytes;
             NetworkStream ns = _client.GetStream();
@@ -92,15 +96,19 @@ namespace FlightSimulator.Model
             }
             ns.Close();
             _client.Close();
-            
+            _listener.Stop();
         }
 
         // solit the info to lon and lat
         public void splitMsg(string msg)
         {
             string[] splitMs = msg.Split(',');
-            Lon = double.Parse(splitMs[0]);
-            Lat = double.Parse(splitMs[1]);
+            if (msg.Contains(","))
+            {
+                Lon = double.Parse(splitMs[0]);
+                Lat = double.Parse(splitMs[1]);
+            }
+            
         }
     }
 }

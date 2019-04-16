@@ -36,12 +36,12 @@ namespace FlightSimulator.Model
                 return m_Instance;
             }
         }
-        
+
 
         private CommandsChannel()
         {
-           _mutex = new Mutex();
-           isConnected = false;
+            _mutex = new Mutex();
+            isConnected = false;
         }
 
         public void ConnectClient()
@@ -52,7 +52,7 @@ namespace FlightSimulator.Model
             _client.Connect(ep);
             Console.WriteLine("Command channel :You are connected");
             isConnected = true;
-            
+
         }
 
         public void disConnect()
@@ -65,7 +65,7 @@ namespace FlightSimulator.Model
         {
             string[] chunks = parseText(text);
             _mutex.WaitOne();
-            Thread thread = new Thread(() => sendThroughSocket(chunks,_client));
+            Thread thread = new Thread(() => sendThroughSocket(chunks, _client));
             thread.Start();
             _mutex.ReleaseMutex();
         }
@@ -74,9 +74,9 @@ namespace FlightSimulator.Model
         {
             if (!isConnected) return;
             NetworkStream ns = _client.GetStream();
-   
+
             foreach (string chunk in chunks)
-            { 
+            {
                 // Send data to server
                 string command = chunk;
                 command += "\r\n";
@@ -88,8 +88,8 @@ namespace FlightSimulator.Model
                 //string result = reader.ReadLine();
                 //Console.WriteLine("Result = {0}", result);
             }
-                
-           // _client.Close();
+
+            // _client.Close();
         }
 
         public string[] parseText(string txt)
@@ -100,5 +100,5 @@ namespace FlightSimulator.Model
         }
     }
 
-    
+
 }

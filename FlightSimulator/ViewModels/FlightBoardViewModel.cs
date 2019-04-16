@@ -12,7 +12,7 @@ namespace FlightSimulator.ViewModels
 {
     public class FlightBoardViewModel : BaseNotify
     {
-        
+
         //private FlightBoard view;
         public FlightBoardViewModel()
         {
@@ -30,13 +30,14 @@ namespace FlightSimulator.ViewModels
         public double Lon
         {
             get { return InfoChannel.Instance.Lon; }
-          
+
         }
 
         public double Lat
         {
             get { return InfoChannel.Instance.Lat; }
-           
+
         }
     }
 }
+

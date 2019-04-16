@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:FlightSimulator"
              StartupUri="MainWindow.xaml"
             ShutdownMode="OnMainWindowClose" >
-             
+
     <Application.Resources>
     </Application.Resources>
 </Application>
