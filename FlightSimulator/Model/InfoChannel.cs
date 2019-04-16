@@ -83,6 +83,7 @@ namespace FlightSimulator.Model
             {
                 if (_client.ReceiveBufferSize > 0)
                 {
+
                     bytes = new byte[_client.ReceiveBufferSize];
                     ns.Read(bytes, 0, _client.ReceiveBufferSize);
                     string msg = Encoding.ASCII.GetString(bytes); //the message incoming
