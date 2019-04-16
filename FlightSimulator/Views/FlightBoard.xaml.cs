@@ -20,16 +20,25 @@ using Microsoft.Research.DynamicDataDisplay.DataSources;
 
 namespace FlightSimulator.Views
 {
+   
+
     /// <summary>
     /// Interaction logic for MazeBoard.xaml
     /// </summary>
+    /// 
     public partial class FlightBoard : UserControl
     {
+        FlightBoardViewModel flightBoardViewModel;
         ObservableDataSource<Point> planeLocations = null;
         public FlightBoard()
         {
             InitializeComponent();
             //this.DataContext = new FlightBoardViewModel();
+            flightBoardViewModel = new FlightBoardViewModel();
+            flightBoardViewModel.PropertyChanged += Vm_PropertyChanged;
+           
+
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -43,11 +52,13 @@ namespace FlightSimulator.Views
 
         private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("hiiiiiii");
+            
             if(e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
                 Console.WriteLine("hiiiiiii2");
-                Point p1 = new Point(0.5,0.5);            // Fill here!
+                Point p1 = new Point(flightBoardViewModel.Lat , flightBoardViewModel.Lon);
+                // Fill here!
+                //Console.WriteLine("Lat: {0}, Lon: {1}", flightBoardViewModel.Lat, flightBoardViewModel.Lon);
                 planeLocations.AppendAsync(Dispatcher, p1);
             }
         }

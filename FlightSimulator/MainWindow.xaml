@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightSimulator"
         xmlns:Controls="clr-namespace:FlightSimulator.Views"
-        
+        xmlns:z="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1000">
+        
+   
+    Title="MainWindow" Height="550" Width="1000">
+    <!--<z:Interaction.Triggers>
+        <z:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
+        </z:EventTrigger>
+    </z:Interaction.Triggers>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

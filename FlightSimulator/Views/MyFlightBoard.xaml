@@ -10,6 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,11 +20,14 @@
         <Button  Name="ConnectButton" Content="Connect" Height="40" Width="120"  Margin="5" HorizontalAlignment="Right" 
                  FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="0"
                  Command="{Binding ConnectCommand}"/>
+        <Button  Name="DisConnectButton" Content="Disconnect" Height="40" Width="120"  Margin="5" HorizontalAlignment="Center" 
+                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="1"
+                 Command="{Binding DisConnectCommand}"/>
 
         <Button  Name="SettingsButton" Content="Settings" Height="40" Width="120"  Margin="5" HorizontalAlignment="Left" 
-                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="1"
+                 FontSize="16" FontWeight="Bold" Grid.Row="0" Grid.Column="2"
                  Command="{Binding SettingsCommand}"/>
 
-        <local:FlightBoard Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1"></local:FlightBoard>
+        <local:FlightBoard Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1"></local:FlightBoard>
     </Grid>
 </UserControl>

@@ -18,8 +18,12 @@ namespace FlightSimulator.Model
         private static CommandsChannel m_Instance = null;
         private Mutex _mutex;
         TcpClient _client;
-        bool _isConnected;
 
+        public bool isConnected
+        {
+            get;
+            set;
+        }
 
         public static CommandsChannel Instance
         {
@@ -37,7 +41,7 @@ namespace FlightSimulator.Model
         private CommandsChannel()
         {
            _mutex = new Mutex();
-           _isConnected = false;
+           isConnected = false;
         }
 
         public void ConnectClient()
@@ -47,8 +51,14 @@ namespace FlightSimulator.Model
             _client = new TcpClient();
             _client.Connect(ep);
             Console.WriteLine("Command channel :You are connected");
-            _isConnected = true;
+            isConnected = true;
             
+        }
+
+        public void disConnect()
+        {
+            isConnected = false;
+            _client.Close();
         }
 
         public void send(string text)
@@ -62,7 +72,7 @@ namespace FlightSimulator.Model
 
         public void sendThroughSocket(string[] chunks, TcpClient _client)
         {
-            if (!_isConnected) return;
+            if (!isConnected) return;
             NetworkStream ns = _client.GetStream();
    
             foreach (string chunk in chunks)

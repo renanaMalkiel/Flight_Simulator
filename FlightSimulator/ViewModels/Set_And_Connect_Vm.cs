@@ -7,6 +7,7 @@ using System.Windows.Input;
 using FlightSimulator.Model;
 using FlightSimulator.Views;
 using FlightSimulator.Model.Interface;
+using System.Threading;
 
 namespace FlightSimulator.ViewModels
 {
@@ -14,6 +15,7 @@ namespace FlightSimulator.ViewModels
     {
         private ICommand _settingsComand;
         private ICommand _connectComand;
+        private ICommand _disConnectComand;
 
         public ICommand SettingsCommand
         {
@@ -26,6 +28,24 @@ namespace FlightSimulator.ViewModels
             {
 
             }
+        }
+        public ICommand DisConnectCommand
+        {
+            get
+            {
+                return _disConnectComand ?? (_disConnectComand =
+                new CommandHandler(() => disConnectClick()));
+            }
+            set
+            {
+
+            }
+        }
+        //closes the info and command sockets
+        private void disConnectClick()
+        {
+            InfoChannel.Instance.shouldStop = true;
+            CommandsChannel.Instance.disConnect();
         }
         private void OnClick()
         {
@@ -48,8 +68,23 @@ namespace FlightSimulator.ViewModels
         }
         private void OnClickConnect()
         {
-            InfoChannel.Instance.connectServer();
-            CommandsChannel.Instance.ConnectClient();
+            if (!CommandsChannel.Instance.isConnected)
+            {
+                new Thread(() =>
+                {
+                    InfoChannel.Instance.connectServer();
+                    CommandsChannel.Instance.ConnectClient();
+                }).Start();
+
+            }
+            else
+            {
+                new Thread(() =>
+                {
+                    CommandsChannel.Instance.disConnect();
+                    CommandsChannel.Instance.ConnectClient();
+                }).Start();
+            }
 
         }
     }
