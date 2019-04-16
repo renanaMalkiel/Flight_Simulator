@@ -63,6 +63,7 @@ namespace FlightSimulator.Model
             shouldStop = false;
         }
 
+        // make a server socket for the simulator to send data to
         public void connectServer()
         {
 
@@ -70,15 +71,16 @@ namespace FlightSimulator.Model
         ApplicationSettingsModel.Instance.FlightInfoPort);
             _listener = new TcpListener(ep);
             _listener.Start();
-            Console.WriteLine("Waiting for client connections...");
+           // Console.WriteLine("Waiting for client connections...");
             _client = _listener.AcceptTcpClient();
-            Console.WriteLine("Info channel: Client connected");
+            //Console.WriteLine("Info channel: Client connected");
 
 
             Thread thread = new Thread(() => listen(_client, _listener));
             thread.Start();
         }
 
+        // recieves the data from the plane and split the message to lon and lat
         public void listen(TcpClient _client, TcpListener _listener)
         {
             Byte[] bytes;

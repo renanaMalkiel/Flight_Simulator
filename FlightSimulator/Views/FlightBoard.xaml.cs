@@ -55,7 +55,7 @@ namespace FlightSimulator.Views
 
             if (e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
-                Console.WriteLine("hiiiiiii2");
+                //Console.WriteLine("hiiiiiii2");
                 Point p1 = new Point(flightBoardViewModel.Lat, flightBoardViewModel.Lon);
                 // Fill here!
                 //Console.WriteLine("Lat: {0}, Lon: {1}", flightBoardViewModel.Lat, flightBoardViewModel.Lon);

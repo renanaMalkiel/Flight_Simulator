@@ -44,25 +44,29 @@ namespace FlightSimulator.Model
             isConnected = false;
         }
 
+        // connect to the flight simulator as a client in order to send commands
         public void ConnectClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
             ApplicationSettingsModel.Instance.FlightCommandPort);
             _client = new TcpClient();
             _client.Connect(ep);
-            Console.WriteLine("Command channel :You are connected");
+            //Console.WriteLine("Command channel :You are connected");
             isConnected = true;
 
         }
 
+        // close the socket
         public void disConnect()
         {
             isConnected = false;
             _client.Close();
         }
 
+        // open thread to send message to the plane
         public void send(string text)
         {
+            //split the text into commands
             string[] chunks = parseText(text);
             _mutex.WaitOne();
             Thread thread = new Thread(() => sendThroughSocket(chunks, _client));
@@ -70,6 +74,7 @@ namespace FlightSimulator.Model
             _mutex.ReleaseMutex();
         }
 
+        // send each command to simulator 2 secconds at a time
         public void sendThroughSocket(string[] chunks, TcpClient _client)
         {
             if (!isConnected) return;
