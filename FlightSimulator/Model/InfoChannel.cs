@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Text;
+
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
@@ -8,27 +9,41 @@ using FlightSimulator.ViewModels;
 
 namespace FlightSimulator.Model
 {
-    class InfoChannel
+    class InfoChannel : BaseNotify
     {
-       // private FlightBoardViewModel vm = new FlightBoardViewModel();
         private static InfoChannel m_Instance = null;
         TcpClient _client;
-        //double lon, lat;
+        TcpListener _listener;
+        double lon, lat;
 
-        //public double Lon {
-        //    set { lon = value;
-        //        NotifyPropertyChanged("Lon");
-        //    }
-        //    get { return lon; }
-        //}
 
-        //public double Lat
-        //{
-        //    set { lat = value;
-        //        NotifyPropertyChanged("Lat");
-        //    }
-        //    get { return lat; }
-        //}
+        public bool shouldStop
+        {
+            set;
+            get;
+        }
+
+
+        public double Lon
+        {
+            set
+            {
+                lon = value;
+                NotifyPropertyChanged("Lon");
+
+            }
+            get { return lon; }
+        }
+
+        public double Lat
+        {
+            set
+            {
+                lat = value;
+                NotifyPropertyChanged("Lat");
+            }
+            get { return lat; }
+        }
 
         public static InfoChannel Instance
         {
@@ -42,50 +57,58 @@ namespace FlightSimulator.Model
             }
         }
 
-        private InfoChannel() { }
-       
-        // openning a TCP server for the plane to connect and send info
+        private InfoChannel()
+        {
+
+            shouldStop = false;
+        }
+
         public void connectServer()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP), 
-            ApplicationSettingsModel.Instance.FlightInfoPort);
-            TcpListener listener = new TcpListener(ep);
-            listener.Start();
+
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ApplicationSettingsModel.Instance.FlightServerIP),
+        ApplicationSettingsModel.Instance.FlightInfoPort);
+            _listener = new TcpListener(ep);
+            _listener.Start();
             Console.WriteLine("Waiting for client connections...");
-            _client = listener.AcceptTcpClient();
+            _client = _listener.AcceptTcpClient();
             Console.WriteLine("Info channel: Client connected");
 
-            Thread thread = new Thread(() => listen(_client));
+
+            Thread thread = new Thread(() => listen(_client, _listener));
             thread.Start();
         }
 
-        // get info constantly from the plane
-        public void listen(TcpClient _client)
+        public void listen(TcpClient _client, TcpListener _listener)
         {
             Byte[] bytes;
             NetworkStream ns = _client.GetStream();
-
-            while (true)
+            while (!shouldStop)
             {
                 if (_client.ReceiveBufferSize > 0)
                 {
+
                     bytes = new byte[_client.ReceiveBufferSize];
                     ns.Read(bytes, 0, _client.ReceiveBufferSize);
                     string msg = Encoding.ASCII.GetString(bytes); //the message incoming
-                    // split the values incoming from the plane
                     splitMsg(msg);
                 }
             }
+            ns.Close();
+            _client.Close();
+            _listener.Stop();
         }
 
-        // split the info to lon and lat
+        // solit the info to lon and lat
         public void splitMsg(string msg)
         {
             string[] splitMs = msg.Split(',');
-            FlightBoardViewModel.Instance.Lon = double.Parse(splitMs[0]);
-            Console.WriteLine("model lon {0}", splitMs[0]);
-            FlightBoardViewModel.Instance.Lat = double.Parse(splitMs[1]);
-            Console.WriteLine("model lat {0}", splitMs[1]);
+            if (msg.Contains(","))
+            {
+                Lon = double.Parse(splitMs[0]);
+                Lat = double.Parse(splitMs[1]);
+            }
+            
         }
     }
 }

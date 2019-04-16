@@ -17,28 +17,32 @@ using FlightSimulator.Model;
 using FlightSimulator.ViewModels;
 using Microsoft.Research.DynamicDataDisplay;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
-using FlightSimulator.ViewModels;
 
 namespace FlightSimulator.Views
 {
+
+
     /// <summary>
     /// Interaction logic for MazeBoard.xaml
     /// </summary>
+    /// 
     public partial class FlightBoard : UserControl
     {
-        //InfoChannel FlightBoardViewModel;
+        FlightBoardViewModel flightBoardViewModel;
         ObservableDataSource<Point> planeLocations = null;
-        //FlightBoardViewModel vm;
         public FlightBoard()
         {
             InitializeComponent();
-            FlightBoardViewModel.Instance.PropertyChanged += Vm_PropertyChanged;
-            Console.WriteLine("bloop\n");
+            //this.DataContext = new FlightBoardViewModel();
+            flightBoardViewModel = new FlightBoardViewModel();
+            flightBoardViewModel.PropertyChanged += Vm_PropertyChanged;
+
+
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
             planeLocations = new ObservableDataSource<Point>();
             // Set identity mapping of point in collection to point on plot
             planeLocations.SetXYMapping(p => p);
@@ -48,12 +52,13 @@ namespace FlightSimulator.Views
 
         private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("hiiiiiii");
-            if(e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
+
+            if (e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
                 Console.WriteLine("hiiiiiii2");
-                Point p1 = new Point(FlightBoardViewModel.Instance.Lat, FlightBoardViewModel.Instance.Lon);  // Fill here!            
-
+                Point p1 = new Point(flightBoardViewModel.Lat, flightBoardViewModel.Lon);
+                // Fill here!
+                //Console.WriteLine("Lat: {0}, Lon: {1}", flightBoardViewModel.Lat, flightBoardViewModel.Lon);
                 planeLocations.AppendAsync(Dispatcher, p1);
             }
         }

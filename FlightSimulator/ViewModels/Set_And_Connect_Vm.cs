@@ -7,6 +7,7 @@ using System.Windows.Input;
 using FlightSimulator.Model;
 using FlightSimulator.Views;
 using FlightSimulator.Model.Interface;
+using System.Threading;
 
 namespace FlightSimulator.ViewModels
 {
@@ -14,6 +15,7 @@ namespace FlightSimulator.ViewModels
     {
         private ICommand _settingsComand;
         private ICommand _connectComand;
+        private ICommand _disConnectComand;
 
         public ICommand SettingsCommand
         {
@@ -27,8 +29,24 @@ namespace FlightSimulator.ViewModels
 
             }
         }
+        public ICommand DisConnectCommand
+        {
+            get
+            {
+                return _disConnectComand ?? (_disConnectComand =
+                new CommandHandler(() => disConnectClick()));
+            }
+            set
+            {
 
-        // when clicks on settings the pop up will apear 
+            }
+        }
+        //closes the info and command sockets
+        private void disConnectClick()
+        {
+            InfoChannel.Instance.shouldStop = true;
+            CommandsChannel.Instance.disConnect();
+        }
         private void OnClick()
         {
             SettingPopup setting = new SettingPopup();
@@ -48,13 +66,25 @@ namespace FlightSimulator.ViewModels
 
             }
         }
-
-        // when clicking connect, connect the info and command channel
         private void OnClickConnect()
         {
-            //todo disconnect and reconnect
-            InfoChannel.Instance.connectServer();
-            CommandsChannel.Instance.ConnectClient();
+            if (!CommandsChannel.Instance.isConnected)
+            {
+                new Thread(() =>
+                {
+                    InfoChannel.Instance.connectServer();
+                    CommandsChannel.Instance.ConnectClient();
+                }).Start();
+
+            }
+            else
+            {
+                new Thread(() =>
+                {
+                    CommandsChannel.Instance.disConnect();
+                    CommandsChannel.Instance.ConnectClient();
+                }).Start();
+            }
 
         }
     }
